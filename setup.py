@@ -4,8 +4,9 @@
 """The setup script."""
 
 import os
+from os.path import join
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
@@ -17,9 +18,15 @@ requirements = []
 
 setup_requirements = []
 
-here = os.path.split(__file__)[0]
-bin_dir = os.path.join(here, "pclpy_dependencies", "bin")
-package_data = [os.path.join(bin_dir, dll) for dll in os.listdir(bin_dir)]
+here = os.path.abspath(os.path.split(__file__)[0])
+
+version_dict = {}
+exec(open(join(here, "pclpy_dependencies", "__version__.py")).read(), version_dict)
+version = version_dict["__version__"]
+
+bin_dir = join("pclpy_dependencies", "bin")
+absolute_bin_dir = join(here, bin_dir)
+package_data = [join(absolute_bin_dir, dll) for dll in os.listdir(absolute_bin_dir)]
 
 setup(
     author="David Caron",
@@ -36,14 +43,13 @@ setup(
     license="MIT license",
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
-    include_package_data=True,
     keywords='pclpy_dependencies',
     name='pclpy_dependencies',
-    packages=find_packages(include=['pclpy_dependencies']),
+    packages=['pclpy_dependencies'],
     package_data={"pclpy_dependencies": package_data},
     python_requires='==3.6.*',
     setup_requires=setup_requirements,
     url='https://github.com/davidcaron/pclpy_dependencies',
-    version='0.1.0',
+    version=version,
     zip_safe=False,
 )
