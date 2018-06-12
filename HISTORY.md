@@ -1,6 +1,12 @@
 # History
 
 
+## 0.2.1 (2018-06-12)
+
+* Missing vtk dlls
+    - Add some more dlls needed by vtk (freetype, libpng16, tbb
+    and zlib)
+
 ## 0.2.0 (2018-06-01)
 
 * Vtk
